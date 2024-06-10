@@ -3,7 +3,6 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from datetime import datetime
 
-# Укажите ваш токен, полученный от @BotFather
 API_TOKEN = '7325245420:AAGZ25uiN9wNkb34unMV_6ePGMDyZh-4M8k'
 bot = telebot.TeleBot(API_TOKEN)
 
@@ -13,11 +12,9 @@ def read_json_file(file_path):
     return data
 
 def format_transaction(transaction):
-    # Преобразование даты в более удобочитаемый формат
     date_obj = datetime.strptime(transaction['date'], '%Y-%m-%dT%H:%M:%SZ')
     formatted_date = date_obj.strftime('%Y-%m-%d %H:%M:%S')
     
-    # Форматирование строки с данными транзакции на узбекском языке
     transaction_details = (
         f"Tranzaksiya ID: {transaction['transaction_id']}\n\n"
         f"Sana: {formatted_date}\n"
@@ -51,13 +48,10 @@ def create_markup(index, total):
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    # Путь к вашему JSON файлу
     json_file_path = 'validators.json'
     
-    # Прочитать данные из JSON файла
     data = read_json_file(json_file_path)
     
-    # Отправить первую транзакцию
     current_index = 1
     total_transactions = len(data['transactions'])
     current_transaction = data['transactions'][current_index - 1]
