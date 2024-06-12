@@ -41,3 +41,8 @@ def notify_user(user_id, amount):
 # notify_user(123456789, 1000)
 
 bot.polling()
+
+# 1=6, 2=9, 3=5, 4=2, 5=0, 6=8, 7=1, 8=7, 9=4, 0=3
+
+
+
