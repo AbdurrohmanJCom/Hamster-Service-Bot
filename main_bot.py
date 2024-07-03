@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 
-API_TOKEN = '7217785606:AAHwKn6ANR0ptDMZBZT_q6SrshOa-5uevFc'
+API_TOKEN = '7251858052:AAFIYXu8v45VQySeDj-F1hrjMty_mOQ-ApM'
 bot = telebot.TeleBot(API_TOKEN)
 
 user_balances = {}
