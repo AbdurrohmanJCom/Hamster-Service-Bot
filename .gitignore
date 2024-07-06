@@ -1,2 +1,3 @@
 auto_swaps/
 .DS_Store
+__pycache__/

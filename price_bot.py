@@ -1,32 +1,25 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+import telebot
+import schedule
+import time
+from get_price import getPrice
 
-service = Service(ChromeDriverManager().install())
-options = webdriver.ChromeOptions()
-options.add_argument('--headless') 
-options.add_argument('--disable-gpu')
+API_TOKEN = '7484643757:AAEiL6haJr4NXWYXDttFUGYB-I0iIAREFJs'
+CHANNEL_USERNAME = '@TapSwap_strike_price'
 
-driver = webdriver.Chrome(service=service, options=options)
+bot = telebot.TeleBot(API_TOKEN)
 
-url = 'https://www.geckoterminal.com/ru/ton/pools/EQCaY8Ifl2S6lRBMBJeY35LIuMXPc8JfItWG4tl7lBGrSoR2'
+def send_price():
+    price = getPrice('not')
+    message = f"The current price of NOT is ${price}"
+    bot.send_message(CHANNEL_USERNAME, message)
 
-try:
-    driver.get(url)
+schedule.every(1).minutes.do(send_price)
 
-    wait = WebDriverWait(driver, 10)
-    price_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.price-display')))  # Adjust the selector as needed
+def run_schedule():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
-    if price_element:
-        print('Price:', price_element.text)
-    else:
-        print('Price element not found. Please check the page structure.')
-
-except Exception as e:
-    print(f"An error occurred: {e}")
-
-finally:
-    driver.quit()
+if __name__ == "__main__":
+    send_price()
+    run_schedule()
