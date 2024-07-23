@@ -6,6 +6,14 @@ bot = telebot.TeleBot(API_TOKEN)
 
 user_balances = {}
 
+address_response = """
+Send TAPS/HMSTR to address:
+<p>YOUR_WALLET_ADDRESS</p>
+
+Money will be deposited automatically to Balance 💰
+"""
+
+
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
