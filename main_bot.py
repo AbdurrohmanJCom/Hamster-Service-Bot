@@ -7,44 +7,44 @@ bot = telebot.TeleBot(API_TOKEN)
 user_balances = {}
 
 address_response = """
-Send TAPS/HMSTR to address:
-<p>YOUR_WALLET_ADDRESS</p>
+Tangalaringizni adresga tashlang:
+<pre>YOUR_WALLET_ADDRESS</pre>
 
-Money will be deposited automatically to Balance 💰
+Pul avtomotik ravishda Balans💰ga tushadi
 """
 
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    address_btn = types.KeyboardButton('Address 📥')
-    balance_btn = types.KeyboardButton('Balance 💰')
-    withdrawal_btn = types.KeyboardButton('Withdrawal 📤')
-    help_btn = types.KeyboardButton('Help 🛠')
-    sprt_btn = types.KeyboardButton('Support Center 👮‍♂️')
+    address_btn = types.KeyboardButton('Adres 📥')
+    balance_btn = types.KeyboardButton('Balans 💰')
+    withdrawal_btn = types.KeyboardButton('Pul yechish 📤')
+    help_btn = types.KeyboardButton('Savollar FAQ 🛠')
+    sprt_btn = types.KeyboardButton('Yordam 👮‍♂️')
     markup.add(address_btn, balance_btn, withdrawal_btn, help_btn, sprt_btn)
-    bot.send_message(message.chat.id, "Welcome! Choose an option:", reply_markup=markup)
+    bot.send_message(message.chat.id, address_response, reply_markup=markup)
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    if message.text == 'Address 📥':
-        bot.send_message(message.chat.id, "Your address is: YOUR_WALLET_ADDRESS")
-    elif message.text == 'Balance 💰':
+    if message.text == 'Adres 📥':
+        bot.send_message(message.chat.id, address_response, parse_mode='HTML')
+    elif message.text == 'Balans 💰':
         user_id = message.from_user.id
         balance = user_balances.get(user_id, 0)
-        bot.send_message(message.chat.id, f"Your balance is: {balance} UZS")
-    elif message.text == 'Help 🛠':
-        bot.send_message(message.chat.id, "Send your hamster combat ton jettons to the specified address. Your balance will be updated automatically.")
-    elif message.text == 'Support Center 👮‍♂️':
+        bot.send_message(message.chat.id, f"Sizning balansingiz: {balance} UZS")
+    elif message.text == 'Savollar FAQ 🛠':
+        bot.send_message(message.chat.id, "TON jettons barlarini ko'rsatilgan manzilga yuboring. Balansingiz avtomatik ravishda yangilanadi.")
+    elif message.text == 'Yordam 👮‍♂️':
         bot.send_message(message.chat.id, "Write some questions to support center @support")
-    elif message.text == 'Withdrawal 📤':
+    elif message.text == 'Pul yechish 📤':
         bot.send_message(message.chat.id, "To Withdrawal send card number")
     else:
         bot.send_message(message.chat.id, "Invalid option. Please choose from Address, Balance, or Help.")
 
 def notify_user(user_id, amount):
     user_balances[user_id] = user_balances.get(user_id, 0) + amount
-    bot.send_message(user_id, f"You received {amount} UZS. Your new balance is {user_balances[user_id]} UZS")
+    bot.send_message(user_id, f"Siz balansingizga {amount} UZS miqdorida pul oldingiz. Sizning yengi balansingiz {user_balances[user_id]} UZS")
 
 # notify_user(123456789, 1000)
 
