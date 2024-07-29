@@ -46,7 +46,7 @@ def process_auth_header(message):
 def handle_get_users(message):
     users = get_users()
     if users:
-        response = "\n".join([f"ID пользователя: <pre>{user[0]}</pre>\n Заголовок авторизации: <pre>{user[1]}</pre>\n\n" for user in users])
+        response = "\n".join([f"<b>ID пользователя:</b> <pre>{user[0]}</pre>\n <b>Заголовок авторизации:</b> <pre>{user[1]}</pre>\n\n" for user in users])
     else:
         response = "Пользователи не найдены."
     bot.send_message(message.chat.id, response, parse_mode='HTML')
