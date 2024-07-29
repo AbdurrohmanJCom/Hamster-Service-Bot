@@ -1,5 +1,5 @@
 import telebot
-from db_manage import add_user, get_users, get_user, delete_user, update_user
+from db_nakrutka import add_user, get_users, get_user, delete_user, update_user
 
 API_TOKEN = '7017269336:AAGgq3V8EJ6F4s180UchUCnI-LzR87iVJt8'
 
@@ -46,10 +46,10 @@ def process_auth_header(message):
 def handle_get_users(message):
     users = get_users()
     if users:
-        response = "\n".join([f"ID пользователя: {user[0]}, Заголовок авторизации: {user[1]}" for user in users])
+        response = "\n".join([f"ID пользователя: <pre>{user[0]}</pre>\n Заголовок авторизации: <pre>{user[1]}</pre>\n\n" for user in users])
     else:
         response = "Пользователи не найдены."
-    bot.send_message(message.chat.id, response)
+    bot.send_message(message.chat.id, response, parse_mode='HTML')
 
 @bot.message_handler(commands=['get_user'])
 def get_user_start(message):
